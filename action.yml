@@ -8,5 +8,5 @@ outputs:
   changed: # id of output
     description: "true if a change was made to a matching file; else false"
 runs:
-  using: "node10"
+  using: "node12"
   main: "index.js"
