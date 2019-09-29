@@ -29,3 +29,6 @@ jobs:
         if: steps.changed.outputs.changed == 'false'
         run: |
           echo "Not changed!"
+      - name: Always log
+        run: |
+          echo "Done!"

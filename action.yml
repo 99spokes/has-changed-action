@@ -3,8 +3,7 @@ description: "Test if commits have touched a matching file"
 inputs:
   pattern:
     description: "File pattern to match"
-  patterns:
-    description: "Array of file patterns to match"
+    required: true
 outputs:
   changed:
     description: "true if a payload commit touched a matching file; else false"
