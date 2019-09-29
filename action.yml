@@ -1,12 +1,19 @@
 name: "Has Changed"
 description: "Test if commits have touched a matching file"
 inputs:
-  pattern: # id of input
+  pattern:
     description: "File pattern to match"
-    required: true
+  patterns:
+    description: "Array of file patterns to match"
 outputs:
-  changed: # id of output
-    description: "true if a change was made to a matching file; else false"
+  changed:
+    description: "true if a payload commit touched a matching file; else false"
+  added:
+    description: "true if a payload commit added a matching file; else false"
+  removed:
+    description: "true if a payload commit removed a matching file; else false"
+  modified:
+    description: "true if a payload commit modified a matching file; else false"
 runs:
   using: "node12"
   main: "index.js"

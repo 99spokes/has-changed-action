@@ -2,18 +2,43 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const minimatch = require('minimatch');
 
-try {
+function run() {
 	const pattern = core.getInput('patterns');
 	let patterns = core.getInput('patterns') || core.getInput('pattern');
 	if (!Array.isArray(patterns)) {
 		patterns = [patterns].filter(x => x);
 	}
 
-	console.log(`Patterns to match: ${patterns.join(', ')}`);
-	core.setOutput('changed', true);
-	// Get the JSON webhook payload for the event that triggered the workflow
-	const payload = JSON.stringify(github.context.payload, undefined, 2);
-	console.log(`The event payload: ${payload}`);
+	const { added, removed, modified } = getMatch(github.context.payload, patterns);
+
+	core.setOutput('changed', added || removed || modified);
+	core.setOutput('added', added);
+	core.setOutput('removed', removed);
+	core.setOutput('modified', modified);
+}
+
+function getMatch(payload, patterns) {
+	let added = false;
+	let removed = false;
+	let modified = false;
+
+	const match = x => patterns.some(p => minimatch(x, p));
+
+	for (const commit of payload.commits) {
+		added = added || commit.added.some(match);
+		removed = removed || commit.removed.some(match);
+		modified = modified || commit.modified.some(match);
+
+		if (added && removed && modified) {
+			break;
+		}
+	}
+
+	return { added, removed, modified };
+}
+
+try {
+	run();
 } catch (error) {
 	core.setFailed(error.message);
 }
