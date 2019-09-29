@@ -1,0 +1,14 @@
+{
+  "name": "has-changed-action",
+  "version": "1.0.0",
+  "description": "This action sets the `changed` output parameters if changed files match the specified pattern.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@actions/core": "^1.1.0",
+    "@actions/github": "^1.1.0",
+    "minimatch": "^3.0.4"
+  }
+}
