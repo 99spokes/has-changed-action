@@ -21,9 +21,9 @@ function getMatch(payload, pattern) {
 	const match = x => minimatch(x, pattern);
 
 	for (const commit of payload.commits || []) {
-		added = added || commit.added.some(match);
-		removed = removed || commit.removed.some(match);
-		modified = modified || commit.modified.some(match);
+		added = added || (commit.added || []).some(match);
+		removed = removed || (commit.removed || []).some(match);
+		modified = modified || (commit.modified || []).some(match);
 
 		if (added && removed && modified) {
 			break;
