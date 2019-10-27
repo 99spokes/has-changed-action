@@ -26,6 +26,9 @@ function getMatch(payload, pattern) {
 
 	for (const commit of payload.commits || []) {
 		core.setOutput('commit', commit);
+		core.setOutput('commit.added', commit.added);
+		core.setOutput('commit.removed', commit.removed);
+		core.setOutput('commit.modified', commit.modified);
 		
 		added = added || (commit.added || []).some(match);
 		removed = removed || (commit.removed || []).some(match);
