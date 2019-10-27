@@ -23,11 +23,12 @@ function getMatch(payload, pattern) {
 	let modified = false;
 
 	const match = x => minimatch(x, pattern);
-
-	core.setOutput('context', JSON.stringify(github.context));
+	
 	core.setOutput('commit count', (payload.commits || []).length);
 	
 	for (const commit of payload.commits || []) {
+		core.setOutput('fetching commit from', `https://api.github.com/repos/99spokes/${github.context.repository.name}/commits/${commit.id}`);
+		const { files } = await github.request(`https://api.github.com/repos/99spokes/${github.context.repository.name}/commits/${commit.id}`);
 		core.setOutput('commit', JSON.stringify(commit));
 		core.setOutput('commit.added', commit.added);
 		core.setOutput('commit.removed', commit.removed);
