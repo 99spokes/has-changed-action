@@ -24,7 +24,7 @@ function getMatch(payload, pattern) {
 
 	const match = x => minimatch(x, pattern);
 
-	
+	core.setOutput('context', JSON.stringify(github.context));
 	core.setOutput('commit count', (payload.commits || []).length);
 	
 	for (const commit of payload.commits || []) {
