@@ -6,6 +6,10 @@ function run() {
 	const pattern = core.getInput('pattern');
 
 	const { added, removed, modified } = getMatch(github.context.payload, pattern);
+	
+	core.setOutput('added', added);
+	core.setOutput('removed', removed);
+	core.setOutput('modified', modified);
 
 	core.setOutput('changed', (added || removed || modified).toString());
 	core.setOutput('added', added.toString());
