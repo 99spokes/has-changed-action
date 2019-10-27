@@ -24,6 +24,9 @@ function getMatch(payload, pattern) {
 
 	const match = x => minimatch(x, pattern);
 
+	
+	core.setOutput('commit count', (payload.commits || []).length);
+	
 	for (const commit of payload.commits || []) {
 		core.setOutput('commit', commit.toString());
 		core.setOutput('commit.added', commit.added);
