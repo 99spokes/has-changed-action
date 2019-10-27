@@ -28,7 +28,7 @@ async function getMatch(payload, pattern) {
 	
 	for (const commit of payload.commits || []) {
 		core.setOutput('fetching commit from', `https://api.github.com/repos/99spokes/${github.context.payload.repository.name}/commits/${commit.id}`);
-		const { files } = await github.request(`https://api.github.com/repos/99spokes/${github.context.payload.repository.name}/commits/${commit.id}`);
+		//const { files } = await github.request(`https://api.github.com/repos/99spokes/${github.context.payload.repository.name}/commits/${commit.id}`);
 		core.setOutput('files', JSON.stringify(files));
 		core.setOutput('commit.added', commit.added);
 		core.setOutput('commit.removed', commit.removed);
