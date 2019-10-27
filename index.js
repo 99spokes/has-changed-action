@@ -29,7 +29,7 @@ function getMatch(payload, pattern) {
 	
 	for (const commit of payload.commits || []) {
 		core.setOutput('commit', commit.files.length);
-		core.setOutput('commit', commit.files[0]);
+		core.setOutput('commit', JSON.stringify(commit));
 		core.setOutput('commit.added', commit.added);
 		core.setOutput('commit.removed', commit.removed);
 		core.setOutput('commit.modified', commit.modified);
