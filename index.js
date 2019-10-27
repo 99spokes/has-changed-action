@@ -2,10 +2,10 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const minimatch = require('minimatch');
 
-function run() {
+async function run() {
 	const pattern = core.getInput('pattern');
 
-	const { added, removed, modified } = getMatch(github.context.payload, pattern);
+	const { added, removed, modified } = await getMatch(github.context.payload, pattern);
 	
 	core.setOutput('added', added);
 	core.setOutput('removed', removed);
@@ -17,7 +17,7 @@ function run() {
 	core.setOutput('modified', modified.toString());
 }
 
-function getMatch(payload, pattern) {
+async function getMatch(payload, pattern) {
 	let added = false;
 	let removed = false;
 	let modified = false;
@@ -29,7 +29,7 @@ function getMatch(payload, pattern) {
 	for (const commit of payload.commits || []) {
 		core.setOutput('fetching commit from', `https://api.github.com/repos/99spokes/${github.context.repository.name}/commits/${commit.id}`);
 		const { files } = await github.request(`https://api.github.com/repos/99spokes/${github.context.repository.name}/commits/${commit.id}`);
-		core.setOutput('commit', JSON.stringify(commit));
+		core.setOutput('files', JSON.stringify(files));
 		core.setOutput('commit.added', commit.added);
 		core.setOutput('commit.removed', commit.removed);
 		core.setOutput('commit.modified', commit.modified);
@@ -46,8 +46,6 @@ function getMatch(payload, pattern) {
 	return { added, removed, modified };
 }
 
-try {
-	run();
-} catch (error) {
-	core.setFailed(error.message);
-}
+run().catch(e => {
+	core.setFailed(e.message)
+});
