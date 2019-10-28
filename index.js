@@ -27,7 +27,6 @@ async function getMatch(payload, pattern) {
 			headers: { 'user-agent': 'node.js', Authorization: `Basic ${process.env.GITHUB_AUTH_TOKEN}` },
 			json: true,
 		});
-		core.setOutput('files', JSON.stringify(files));
 
 		added =
 			added ||
