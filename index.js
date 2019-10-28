@@ -1,7 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 const minimatch = require('minimatch');
-conse request = require('request-promise');
+const request = require('request-promise');
 
 async function run() {
 	const pattern = core.getInput('pattern');
