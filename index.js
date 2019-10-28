@@ -24,7 +24,7 @@ async function getMatch(payload, pattern) {
 	for (const commit of payload.commits || []) {
 		const { files } = await request({
 			uri: `https://api.github.com/repos/99spokes/${github.context.payload.repository.name}/commits/${commit.id}`,
-			headers: { 'user-agent': 'node.js', Authorization: `Basic ${process.env.GITHUB_TOKEN}` },
+			headers: { 'user-agent': 'node.js', Authorization: `Bearer ${process.env.GITHUB_TOKEN}` },
 			json: true,
 		});
 
