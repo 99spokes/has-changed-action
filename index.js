@@ -1,6 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 const minimatch = require('minimatch');
+conse request = require('request-promise');
 
 async function run() {
 	const pattern = core.getInput('pattern');
@@ -28,8 +29,8 @@ async function getMatch(payload, pattern) {
 	
 	for (const commit of payload.commits || []) {
 		core.setOutput('fetching commit from', `https://api.github.com/repos/99spokes/${github.context.payload.repository.name}/commits/${commit.id}`);
-		//const { files } = await github.request(`https://api.github.com/repos/99spokes/${github.context.payload.repository.name}/commits/${commit.id}`);
-		//core.setOutput('files', JSON.stringify(files));
+		const { files } = await request({ uri: `https://api.github.com/repos/99spokes/${github.context.payload.repository.name}/commits/${commit.id}`, json: true });
+		core.setOutput('files', JSON.stringify(files));
 		core.setOutput('commit.added', commit.added);
 		core.setOutput('commit.removed', commit.removed);
 		core.setOutput('commit.modified', commit.modified);

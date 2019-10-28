@@ -9,6 +9,8 @@
   "dependencies": {
     "@actions/core": "^1.1.0",
     "@actions/github": "^1.1.0",
-    "minimatch": "^3.0.4"
+    "minimatch": "^3.0.4",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4"
   }
 }
