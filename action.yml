@@ -14,5 +14,5 @@ outputs:
   modified:
     description: 'true if a payload commit modified a matching file; else false'
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'index.js'
