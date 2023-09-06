@@ -1,6 +1,6 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-const minimatch = require('minimatch');
+const { minimatch } = require('minimatch');
 const request = require('request-promise');
 
 async function run() {
@@ -19,7 +19,7 @@ async function getMatch(payload, pattern) {
 	let removed = false;
 	let modified = false;
 
-	const match = x => minimatch(x, pattern);
+	const match = (x) => minimatch(x, pattern);
 
 	for (const commit of payload.commits || []) {
 		const { files } = await request({
@@ -31,20 +31,20 @@ async function getMatch(payload, pattern) {
 		added =
 			added ||
 			files
-				.filter(x => x.status === 'added')
-				.map(x => x.filename)
+				.filter((x) => x.status === 'added')
+				.map((x) => x.filename)
 				.some(match);
 		removed =
 			removed ||
 			files
-				.filter(x => x.status === 'removed')
-				.map(x => x.filename)
+				.filter((x) => x.status === 'removed')
+				.map((x) => x.filename)
 				.some(match);
 		modified =
 			modified ||
 			files
-				.filter(x => x.status === 'modified')
-				.map(x => x.filename)
+				.filter((x) => x.status === 'modified')
+				.map((x) => x.filename)
 				.some(match);
 
 		if (added && removed && modified) {
@@ -55,6 +55,6 @@ async function getMatch(payload, pattern) {
 	return { added, removed, modified };
 }
 
-run().catch(e => {
+run().catch((e) => {
 	core.setFailed(e.message);
 });
